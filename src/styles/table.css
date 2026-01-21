@@ -1,0 +1,81 @@
+.table-container {
+  background-color: var(--surface-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.table-container h3 {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  margin: 0;
+  font-size: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background-color: var(--background-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table thead tr th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: var(--background-color);
+}
+
+.table tbody tr.status-present {
+  border-left: 3px solid var(--success-color);
+}
+
+.table tbody tr.status-absent {
+  border-left: 3px solid var(--danger-color);
+}
+
+.table tbody tr td {
+  padding: var(--spacing-md);
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.table tbody tr td:last-child {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 12px;
+  }
+
+  .table thead tr th {
+    padding: var(--spacing-sm);
+  }
+
+  .table tbody tr td {
+    padding: var(--spacing-sm);
+  }
+
+  .btn-small {
+    padding: 4px 6px;
+    font-size: 11px;
+    margin: 2px;
+  }
+}
