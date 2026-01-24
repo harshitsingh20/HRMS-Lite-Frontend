@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { DashboardPage } from './pages/DashboardPage';
 import { EmployeesPage } from './pages/EmployeesPage';
 import { AttendancePage } from './pages/AttendancePage';
 import './styles/global.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('employees');
+  const [currentPage, setCurrentPage] = useState('dashboard');
 
   return (
     <div className="app">
@@ -26,6 +27,24 @@ function App() {
 
           <nav>
             <ul>
+              <li>
+                <a
+                  href="#dashboard"
+                  className={currentPage === 'dashboard' ? 'active' : ''}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage('dashboard');
+                  }}
+                >
+                  <svg className="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg>
+                  Dashboard
+                </a>
+              </li>
               <li>
                 <a
                   href="#employees"
@@ -69,6 +88,7 @@ function App() {
       </header>
 
       <main>
+        {currentPage === 'dashboard' && <DashboardPage />}
         {currentPage === 'employees' && <EmployeesPage />}
         {currentPage === 'attendance' && <AttendancePage />}
       </main>

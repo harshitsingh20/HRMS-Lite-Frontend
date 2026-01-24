@@ -96,41 +96,113 @@
 
 /* Filter section styling */
 .filter-section {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--background-color);
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
-.filter-section label {
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.filter-group label,
+.filter-section > label {
   font-weight: 500;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.filter-section select {
-  padding: 10px 14px;
+.filter-group label svg {
+  color: var(--text-muted);
+}
+
+.filter-section select,
+.filter-group select {
+  padding: 8px 12px;
   border-radius: var(--radius);
   border: 1px solid var(--border-color);
-  font-size: 14px;
-  min-width: 220px;
+  font-size: 13px;
+  min-width: 180px;
   background-color: var(--surface-color);
   color: var(--text-primary);
   cursor: pointer;
   transition: var(--transition);
 }
 
-.filter-section select:hover {
+.filter-section input[type="date"],
+.filter-group input[type="date"] {
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  font-size: 13px;
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-section select:hover,
+.filter-group select:hover,
+.filter-section input:hover,
+.filter-group input:hover {
   border-color: var(--primary-color);
 }
 
-.filter-section select:focus {
+.filter-section select:focus,
+.filter-group select:focus,
+.filter-section input:focus,
+.filter-group input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 0 var(--spacing-sm);
+  flex: 1;
+  max-width: 320px;
+  transition: var(--transition);
+}
+
+.search-box:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-box svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  font-size: 13px;
+  width: 100%;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.search-box input::placeholder {
+  color: var(--text-muted);
 }
 
 /* Stats cards */
