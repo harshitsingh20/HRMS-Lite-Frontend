@@ -226,20 +226,15 @@
   gap: var(--spacing-xs);
 }
 
-@media (max-width: 768px) {
+/* Tablet */
+@media (max-width: 1024px) {
+  .table-header {
+    padding: var(--spacing-md);
+  }
+
   .table thead tr th,
   .table tbody tr td {
-    padding: var(--spacing-sm);
-  }
-
-  .table thead tr th:first-child,
-  .table tbody tr td:first-child {
-    padding-left: var(--spacing-md);
-  }
-
-  .table thead tr th:last-child,
-  .table tbody tr td:last-child {
-    padding-right: var(--spacing-md);
+    padding: 12px var(--spacing-sm);
   }
 
   .employee-avatar {
@@ -247,31 +242,193 @@
     height: 32px;
     font-size: 12px;
   }
+}
 
-  .btn-small {
-    padding: 4px 8px;
+/* Mobile Landscape & Small Tablets */
+@media (max-width: 768px) {
+  .table-container {
+    border-radius: var(--radius);
+  }
+
+  .table-header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .table-header h3 {
+    font-size: 14px;
+  }
+
+  .table-header .record-count {
+    font-size: 12px;
+  }
+
+  .table thead tr th {
+    padding: 10px var(--spacing-sm);
+    font-size: 10px;
+  }
+
+  .table tbody tr td {
+    padding: 10px var(--spacing-sm);
+    font-size: 13px;
+  }
+
+  .table thead tr th:first-child,
+  .table tbody tr td:first-child {
+    padding-left: var(--spacing-sm);
+  }
+
+  .table thead tr th:last-child,
+  .table tbody tr td:last-child {
+    padding-right: var(--spacing-sm);
+  }
+
+  .employee-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .employee-name {
+    font-size: 13px;
+  }
+
+  .employee-email {
+    font-size: 11px;
+  }
+
+  .emp-id {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .dept-cell {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .date-cell {
     font-size: 12px;
   }
 
   .actions-cell {
-    flex-direction: column;
+    flex-direction: row;
     gap: 4px;
+  }
+
+  .table-loading {
+    padding: var(--spacing-xl);
+  }
+
+  .table-empty {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .table-empty-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .table-empty-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .table-empty h3 {
+    font-size: 14px;
+  }
+
+  .table-empty p {
+    font-size: 12px;
   }
 }
 
-@media (max-width: 640px) {
+/* Mobile Portrait */
+@media (max-width: 480px) {
   .table-header {
+    padding: var(--spacing-sm);
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
+  }
+
+  .table-header h3 {
+    font-size: 13px;
+  }
+
+  /* Hide some columns on mobile */
+  .table thead tr th:nth-child(3),
+  .table tbody tr td:nth-child(3) {
+    display: none;
+  }
+
+  .table thead tr th {
+    padding: 8px 6px;
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
+
+  .table tbody tr td {
+    padding: 8px 6px;
+    font-size: 12px;
   }
 
   .employee-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-xs);
+    gap: 6px;
   }
 
   .employee-avatar {
-    display: none;
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+
+  .employee-name {
+    font-size: 12px;
+  }
+
+  .emp-id {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  .dept-cell {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  .date-cell {
+    font-size: 11px;
+  }
+
+  .badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .actions-cell .btn-small {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+
+  .table-empty {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .table-empty-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .table-empty h3 {
+    font-size: 13px;
+  }
+
+  .table-empty p {
+    font-size: 11px;
   }
 }

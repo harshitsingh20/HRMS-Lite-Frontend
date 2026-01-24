@@ -233,37 +233,139 @@
   margin-top: var(--spacing-xs);
 }
 
+/* Tablet */
 @media (max-width: 1024px) {
   .page-content {
     grid-template-columns: 1fr;
+    padding: var(--spacing-lg);
   }
 
   .form-section {
     position: static;
+    order: 1;
+  }
+
+  .table-section {
+    order: 2;
   }
 }
 
+/* Mobile Landscape & Small Tablets */
 @media (max-width: 768px) {
+  .page {
+    min-height: calc(100vh - 100px);
+  }
+
   .page-header {
-    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
   }
 
   .page-header h1 {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    margin-top: 4px;
   }
 
   .page-content {
     padding: var(--spacing-md);
     gap: var(--spacing-md);
-    margin-top: -16px;
+    margin-top: -12px;
+  }
+
+  .form-section,
+  .table-section {
+    border-radius: var(--radius);
+  }
+
+  .section-header {
+    padding: var(--spacing-md);
+  }
+
+  .section-header h3 {
+    font-size: 14px;
+  }
+
+  /* Filter section mobile */
+  .filter-section {
+    padding: var(--spacing-sm) var(--spacing-md);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .filter-group label {
+    font-size: 12px;
+  }
+
+  .filter-section select,
+  .filter-group select,
+  .filter-section input[type="date"],
+  .filter-group input[type="date"] {
+    width: 100%;
+    min-width: unset;
+    padding: 10px 12px;
+  }
+
+  .search-box {
+    max-width: none;
+    width: 100%;
+  }
+
+  .search-box input {
+    padding: 10px 0;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-card {
+    padding: var(--spacing-md);
+  }
+
+  .stat-card-value {
+    font-size: 24px;
+  }
+
+  .stat-card-label {
+    font-size: 12px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .page-header {
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-md);
+  }
+
+  .page-header h1 {
+    font-size: 18px;
+  }
+
+  .page-header p {
+    font-size: 12px;
+  }
+
+  .page-content {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+    margin-top: -8px;
   }
 
   .filter-section {
-    flex-direction: column;
-    align-items: stretch;
+    padding: var(--spacing-sm);
   }
 
-  .filter-section select {
-    width: 100%;
+  .stats-row {
+    grid-template-columns: 1fr;
   }
 }

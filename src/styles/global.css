@@ -392,11 +392,36 @@ nav a.active {
 .mb-lg { margin-bottom: var(--spacing-lg); }
 
 /* ========== Responsive ========== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .header-content {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* Mobile Landscape & Small Tablets */
 @media (max-width: 768px) {
+  :root {
+    --spacing-lg: 20px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+  }
+
   .header-content {
     padding: var(--spacing-sm) var(--spacing-md);
     flex-direction: column;
     gap: var(--spacing-sm);
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   .logo-text {
@@ -406,10 +431,110 @@ nav a.active {
   nav ul {
     width: 100%;
     justify-content: center;
+    gap: 2px;
   }
 
   nav a {
+    padding: var(--spacing-sm) var(--spacing-sm);
+    font-size: 13px;
+    gap: 4px;
+  }
+
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn-primary {
+    padding: 10px var(--spacing-md);
+    font-size: 14px;
+  }
+
+  .btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .empty-state {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .empty-state h3 {
+    font-size: 16px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  :root {
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 28px;
+  }
+
+  body {
+    font-size: 13px;
+  }
+
+  .header-content {
+    padding: var(--spacing-sm);
+  }
+
+  .app-logo {
+    gap: 6px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  nav ul {
+    gap: 0;
+  }
+
+  nav a {
+    padding: 6px 8px;
+    font-size: 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  nav a .nav-icon {
+    display: none;
+  }
+
+  .btn-primary {
+    padding: 10px var(--spacing-sm);
+    font-size: 14px;
+  }
+
+  .btn-small {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .error-message,
+  .success-message,
+  .validation-errors {
     padding: var(--spacing-sm);
     font-size: 13px;
+  }
+
+  .badge {
+    padding: 3px 8px;
+    font-size: 11px;
   }
 }
