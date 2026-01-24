@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { DashboardPage } from './pages/DashboardPage';
 import { EmployeesPage } from './pages/EmployeesPage';
 import { AttendancePage } from './pages/AttendancePage';
+import { ToastProvider } from './context/ToastContext';
 import './styles/global.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
 
   return (
+    <ToastProvider>
     <div className="app">
       <header className="app-header">
         <div className="header-content">
@@ -93,6 +95,7 @@ function App() {
         {currentPage === 'attendance' && <AttendancePage />}
       </main>
     </div>
+    </ToastProvider>
   );
 }
 

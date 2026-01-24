@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { EmployeeForm } from '../components/EmployeeForm';
 import { EmployeeTable } from '../components/EmployeeTable';
 import { employeeService } from '../services/api';
+import { useToast } from '../context/ToastContext';
 import '../styles/page.css';
 
 export const EmployeesPage = () => {
@@ -14,6 +15,7 @@ export const EmployeesPage = () => {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('all');
+  const toast = useToast();
 
   const fetchEmployees = async () => {
     try {
@@ -93,8 +95,11 @@ export const EmployeesPage = () => {
           setEmployees(updatedEmployees);
           applyFilters(updatedEmployees, searchQuery, departmentFilter);
           setEditingEmployee(null);
+          toast.success(`Employee "${data.full_name}" updated successfully!`);
         } else {
-          setSubmitError(response.message || 'Failed to update employee');
+          const errorMsg = response.message || 'Failed to update employee';
+          setSubmitError(errorMsg);
+          toast.error(errorMsg);
         }
       } else {
         const response = await employeeService.create(data);
@@ -102,13 +107,17 @@ export const EmployeesPage = () => {
           const updatedEmployees = [response.data, ...employees];
           setEmployees(updatedEmployees);
           applyFilters(updatedEmployees, searchQuery, departmentFilter);
+          toast.success(`Employee "${data.full_name}" added successfully!`);
         } else {
-          setSubmitError(response.message || 'Failed to create employee');
+          const errorMsg = response.message || 'Failed to create employee';
+          setSubmitError(errorMsg);
+          toast.error(errorMsg);
         }
       }
     } catch (err) {
       const errorMessage = err.response?.data?.detail || err.message || 'An error occurred';
       setSubmitError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -116,6 +125,7 @@ export const EmployeesPage = () => {
 
   const handleDelete = async (id) => {
     setIsDeletingId(id);
+    const employeeToDelete = employees.find(emp => emp.id === id);
 
     try {
       const response = await employeeService.delete(id);
@@ -123,12 +133,16 @@ export const EmployeesPage = () => {
         const updatedEmployees = employees.filter((emp) => emp.id !== id);
         setEmployees(updatedEmployees);
         applyFilters(updatedEmployees, searchQuery, departmentFilter);
+        toast.success(`Employee "${employeeToDelete?.full_name || 'Employee'}" deleted successfully!`);
       } else {
-        setSubmitError(response.message || 'Failed to delete employee');
+        const errorMsg = response.message || 'Failed to delete employee';
+        setSubmitError(errorMsg);
+        toast.error(errorMsg);
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to delete employee';
       setSubmitError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsDeletingId(null);
     }

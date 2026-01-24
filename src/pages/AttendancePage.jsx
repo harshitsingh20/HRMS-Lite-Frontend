@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { AttendanceForm } from '../components/AttendanceForm';
 import { AttendanceTable } from '../components/AttendanceTable';
 import { employeeService, attendanceService } from '../services/api';
+import { useToast } from '../context/ToastContext';
 import '../styles/page.css';
 
 export const AttendancePage = () => {
@@ -16,6 +17,7 @@ export const AttendancePage = () => {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState('all');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const toast = useToast();
 
   const fetchEmployees = async () => {
     try {
@@ -103,17 +105,23 @@ export const AttendancePage = () => {
   const handleSubmit = async (data) => {
     setSubmitError(null);
     setIsSubmitting(true);
+    const employee = employees.find(e => e.id === parseInt(data.employee_id));
+    const employeeName = employee?.full_name || 'Employee';
 
     try {
       const response = await attendanceService.mark(data);
       if (response.success) {
         fetchAttendance(selectedEmployeeId);
+        toast.success(`Attendance marked as "${data.status}" for ${employeeName}!`);
       } else {
-        setSubmitError(response.message || 'Failed to mark attendance');
+        const errorMsg = response.message || 'Failed to mark attendance';
+        setSubmitError(errorMsg);
+        toast.error(errorMsg);
       }
     } catch (err) {
       const errorMessage = err.response?.data?.detail || err.message || 'An error occurred';
       setSubmitError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -128,12 +136,16 @@ export const AttendancePage = () => {
         const newRecords = attendanceRecords.filter((record) => record.id !== id);
         setAttendanceRecords(newRecords);
         applyDateFilter(newRecords, startDate, endDate);
+        toast.success('Attendance record deleted successfully!');
       } else {
-        setError(response.message || 'Failed to delete attendance record');
+        const errorMsg = response.message || 'Failed to delete attendance record';
+        setError(errorMsg);
+        toast.error(errorMsg);
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to delete attendance record';
       setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsDeletingId(null);
     }
