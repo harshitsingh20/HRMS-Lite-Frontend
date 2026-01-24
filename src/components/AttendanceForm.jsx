@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../styles/form.css';
 
 export const AttendanceForm = ({ employees, onSubmit, isLoading, error }) => {
@@ -15,6 +15,10 @@ export const AttendanceForm = ({ employees, onSubmit, isLoading, error }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleStatusChange = (status) => {
+    setFormData((prev) => ({ ...prev, status }));
   };
 
   const handleSubmit = async (e) => {
@@ -41,7 +45,16 @@ export const AttendanceForm = ({ employees, onSubmit, isLoading, error }) => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      <h2>Mark Attendance</h2>
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <path d="M9 16l2 2 4-4" />
+        </svg>
+        Mark Attendance
+      </h2>
 
       {error && <div className="error-message">{error}</div>}
 
@@ -64,7 +77,7 @@ export const AttendanceForm = ({ employees, onSubmit, isLoading, error }) => {
           <option value="">Select Employee</option>
           {employees.map((emp) => (
             <option key={emp.id} value={emp.id}>
-              {emp.employee_id} - {emp.full_name}
+              {emp.full_name} ({emp.employee_id})
             </option>
           ))}
         </select>
@@ -82,16 +95,30 @@ export const AttendanceForm = ({ employees, onSubmit, isLoading, error }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="status">Status *</label>
-        <select
-          id="status"
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-        >
-          <option value="Present">Present</option>
-          <option value="Absent">Absent</option>
-        </select>
+        <label>Status *</label>
+        <div className="status-toggle">
+          <button
+            type="button"
+            className={`status-btn ${formData.status === 'Present' ? 'present' : ''}`}
+            onClick={() => handleStatusChange('Present')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Present
+          </button>
+          <button
+            type="button"
+            className={`status-btn ${formData.status === 'Absent' ? 'absent' : ''}`}
+            onClick={() => handleStatusChange('Absent')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            Absent
+          </button>
+        </div>
       </div>
 
       <button type="submit" disabled={isLoading} className="btn-primary">

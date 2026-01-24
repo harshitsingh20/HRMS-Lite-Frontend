@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { EmployeeForm } from '../components/EmployeeForm';
 import { EmployeeTable } from '../components/EmployeeTable';
 import { employeeService } from '../services/api';
@@ -86,7 +86,10 @@ export const EmployeesPage = () => {
   return (
     <div className="page">
       <div className="page-header">
-        <h1>Employee Management</h1>
+        <div className="page-header-content">
+          <h1>Employee Management</h1>
+          <p>Add, edit, and manage your organization's employees</p>
+        </div>
       </div>
 
       <div className="page-content">
@@ -98,13 +101,15 @@ export const EmployeesPage = () => {
             error={submitError || undefined}
           />
           {editingEmployee && (
-            <button
-              className="btn-secondary"
-              onClick={() => setEditingEmployee(null)}
-              style={{ marginTop: '10px', width: '100%' }}
-            >
-              Cancel Edit
-            </button>
+            <div style={{ padding: '0 24px 24px' }}>
+              <button
+                className="btn-secondary"
+                onClick={() => setEditingEmployee(null)}
+                style={{ width: '100%' }}
+              >
+                Cancel Edit
+              </button>
+            </div>
           )}
         </div>
 

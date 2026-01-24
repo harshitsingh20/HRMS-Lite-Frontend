@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/form.css';
 
 export const EmployeeForm = ({ onSubmit, initialData, isLoading, error }) => {
@@ -61,7 +61,23 @@ export const EmployeeForm = ({ onSubmit, initialData, isLoading, error }) => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      <h2>{initialData?.id ? 'Edit Employee' : 'Add New Employee'}</h2>
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          {initialData?.id ? (
+            <>
+              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+            </>
+          ) : (
+            <>
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="8.5" cy="7" r="4" />
+              <line x1="20" y1="8" x2="20" y2="14" />
+              <line x1="23" y1="11" x2="17" y2="11" />
+            </>
+          )}
+        </svg>
+        {initialData?.id ? 'Edit Employee' : 'Add New Employee'}
+      </h2>
 
       {error && <div className="error-message">{error}</div>}
 
@@ -129,7 +145,7 @@ export const EmployeeForm = ({ onSubmit, initialData, isLoading, error }) => {
       </div>
 
       <button type="submit" disabled={isLoading} className="btn-primary">
-        {isLoading ? 'Saving...' : 'Save Employee'}
+        {isLoading ? 'Saving...' : initialData?.id ? 'Update Employee' : 'Add Employee'}
       </button>
     </form>
   );

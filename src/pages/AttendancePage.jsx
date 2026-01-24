@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AttendanceForm } from '../components/AttendanceForm';
 import { AttendanceTable } from '../components/AttendanceTable';
 import { employeeService, attendanceService } from '../services/api';
@@ -12,6 +12,7 @@ export const AttendancePage = () => {
   const [isDeletingId, setIsDeletingId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState('all');
 
   const fetchEmployees = async () => {
     try {
@@ -27,10 +28,18 @@ export const AttendancePage = () => {
     }
   };
 
-  const fetchAttendance = async () => {
+  const fetchAttendance = async (employeeId = 'all') => {
     try {
       setIsLoadingAttendance(true);
-      const response = await attendanceService.getAll();
+      setError(null);
+      let response;
+
+      if (employeeId === 'all') {
+        response = await attendanceService.getAll();
+      } else {
+        response = await attendanceService.getByEmployee(employeeId);
+      }
+
       if (response.success) {
         setAttendanceRecords(response.data || []);
       } else {
@@ -42,6 +51,12 @@ export const AttendancePage = () => {
     } finally {
       setIsLoadingAttendance(false);
     }
+  };
+
+  const handleEmployeeFilter = (e) => {
+    const employeeId = e.target.value;
+    setSelectedEmployeeId(employeeId);
+    fetchAttendance(employeeId);
   };
 
   useEffect(() => {
@@ -56,17 +71,8 @@ export const AttendancePage = () => {
     try {
       const response = await attendanceService.mark(data);
       if (response.success) {
-        const existingIndex = attendanceRecords.findIndex(
-          (record) => record.employee_id === data.employee_id && record.date === data.date
-        );
-
-        if (existingIndex >= 0) {
-          const updated = [...attendanceRecords];
-          updated[existingIndex] = response.data;
-          setAttendanceRecords(updated);
-        } else {
-          setAttendanceRecords((prev) => [response.data, ...prev]);
-        }
+        // Refresh attendance based on current filter
+        fetchAttendance(selectedEmployeeId);
       } else {
         setSubmitError(response.message || 'Failed to mark attendance');
       }
@@ -96,10 +102,19 @@ export const AttendancePage = () => {
     }
   };
 
+  const getSelectedEmployeeName = () => {
+    if (selectedEmployeeId === 'all') return null;
+    const employee = employees.find(e => e.id === parseInt(selectedEmployeeId));
+    return employee?.full_name || 'Selected Employee';
+  };
+
   return (
     <div className="page">
       <div className="page-header">
-        <h1>Attendance Management</h1>
+        <div className="page-header-content">
+          <h1>Attendance Management</h1>
+          <p>Track and manage employee attendance records</p>
+        </div>
       </div>
 
       <div className="page-content">
@@ -113,13 +128,33 @@ export const AttendancePage = () => {
         </div>
 
         <div className="table-section">
-          {error && <div className="error-message">{error}</div>}
+          <div className="filter-section">
+            <label htmlFor="employee-filter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}>
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+              Filter by Employee:
+            </label>
+            <select
+              id="employee-filter"
+              value={selectedEmployeeId}
+              onChange={handleEmployeeFilter}
+            >
+              <option value="all">All Employees</option>
+              {employees.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.full_name} ({emp.employee_id})
+                </option>
+              ))}
+            </select>
+          </div>
+          {error && <div className="error-message" style={{ margin: '16px' }}>{error}</div>}
           <AttendanceTable
             attendanceRecords={attendanceRecords}
             isLoading={isLoadingAttendance}
             onDelete={handleDelete}
             isDeletingId={isDeletingId || undefined}
-            title="All Attendance Records"
+            title={selectedEmployeeId === 'all' ? 'All Attendance Records' : `Attendance for ${getSelectedEmployeeName()}`}
           />
         </div>
       </div>
